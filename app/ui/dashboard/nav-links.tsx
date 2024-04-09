@@ -9,7 +9,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { useSession } from "next-auth/react";
-import { data } from 'autoprefixer';
 
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
@@ -26,7 +25,6 @@ const links = [
 export default function NavLinks() {
   const pathname = usePathname();
   const { data: session, status } = useSession()
-  console.log(session)
 
   return (
     <>

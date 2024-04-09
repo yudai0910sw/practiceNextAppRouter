@@ -17,7 +17,6 @@ export const authConfig: NextAuthConfig = {
       return true;
     },
     async jwt({ token, user, account, session }) {
-
       if (user) {
         token.user = user
         const u = user as any
@@ -28,17 +27,6 @@ export const authConfig: NextAuthConfig = {
       }
 
       return token
-    },
-    session: ({ session, token }) => {
-      console.log("session callback ", { session });
-      token.accessToken
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          role: token.role,
-        },
-      }    
     },
   },
   providers: [], // Add providers with an empty array for now
