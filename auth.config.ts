@@ -1,6 +1,6 @@
 import type { NextAuthConfig } from 'next-auth';
- 
-export const authConfig = {
+
+export const authConfig: NextAuthConfig = {
   pages: {
     signIn: '/login',
   },
@@ -15,6 +15,30 @@ export const authConfig = {
         return Response.redirect(new URL('/dashboard', nextUrl));
       }
       return true;
+    },
+    async jwt({ token, user, account, session }) {
+
+      if (user) {
+        token.user = user
+        const u = user as any
+        token.role = u.role
+      }
+      if (account) {
+        token.accessToken = account.access_token
+      }
+
+      return token
+    },
+    session: ({ session, token }) => {
+      console.log("session callback ", { session });
+      token.accessToken
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          role: token.role,
+        },
+      }    
     },
   },
   providers: [], // Add providers with an empty array for now
